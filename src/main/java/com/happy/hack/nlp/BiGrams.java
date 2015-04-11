@@ -3,11 +3,10 @@
  */
 package com.happy.hack.nlp;
 
+import com.happy.hack.hibernate.dao.LuxuryHotelDAOImpl;
+import com.happy.hack.hibernate.entity.LuxuryHotel;
 
-/**
- * @author saurabhshashank
- *
- */
+
 /**
  * @author saurabhshashank
  * <p>A Simple consecutive words bi-gram alogrithm</p>
@@ -16,8 +15,10 @@ package com.happy.hack.nlp;
 public class BiGrams {
 	public void biGramsConnection() {}
 
-	public static void biGramEngine(String content) {
+	public static void biGramEngine(LuxuryHotel hotel) throws Exception {
 		// the line are sep by ||
+				
+		String content=StopWordRemoval.getStopWordRemoval(hotel.getContent());
 		StringBuffer biGrams = new StringBuffer();
 		String[] lines = content.split("\\|\\|");
 		for (String line : lines) {
@@ -34,5 +35,12 @@ public class BiGrams {
 		}
 
 		
+	}
+	public static void main(String[] args) throws Exception {
+		LuxuryHotelDAOImpl DAO=new LuxuryHotelDAOImpl();
+		DAO.getAllData();
+		for (LuxuryHotel lh : DAO.getAllData()) {
+			biGramEngine(lh);
+		}
 	}
 }

@@ -115,10 +115,10 @@ public class Triplet {
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
-		new Triplet().triplet(" Good service, great facilities True, Downtown Los Angeles is a dodgy place to stay, but if you must be in the area, Clarion is a good choice. We went to see a show in Club Nokia and chose this hotel due to its close proximity to the venue and the cheap price (I work in the travel industry and after my employee discount the price was rediculously low for an L.A accomodation). We had initially planned to walk to the venue, but the receptionists advised us against it an booked us a cab. The hotel might be old but well-maintained. Public facilities are clean and pleasant. Room was big, equipped with a TV set, refrigirator and coffee making facilites - none of which we used, but all looked clean. Bathroom was spotless, water in the shower pipping hot and with high pressure, bathroom amenities of better quality than what you find in most places. There's free parking for hotel guests, which is a great advantage. Will book there again if needed.");
+		new Triplet().tokenizer(" Good service, great facilities True, Downtown Los Angeles is a dodgy place to stay, but if you must be in the area, Clarion is a good choice. We went to see a show in Club Nokia and chose this hotel due to its close proximity to the venue and the cheap price (I work in the travel industry and after my employee discount the price was rediculously low for an L.A accomodation). We had initially planned to walk to the venue, but the receptionists advised us against it an booked us a cab. The hotel might be old but well-maintained. Public facilities are clean and pleasant. Room was big, equipped with a TV set, refrigirator and coffee making facilites - none of which we used, but all looked clean. Bathroom was spotless, water in the shower pipping hot and with high pressure, bathroom amenities of better quality than what you find in most places. There's free parking for hotel guests, which is a great advantage. Will book there again if needed.");
 	}
 
-	public ArrayList<String> tokenizer(String content) throws Exception {
+	public  ArrayList<String> tokenizer(String content) throws Exception {
 		ArrayList<String> lines = new ArrayList<String>();
 
 		ClassLoader classLoader = getClass().getClassLoader();
@@ -129,9 +129,10 @@ public class Triplet {
 		String[] sent = detectorME.sentDetect(content);
 		for (String string : sent) {
 			lines.add(string);
+//			System.out.println(string);
 		}
 		fileInputStream.close();
-
+		
 		return lines;
 
 	}

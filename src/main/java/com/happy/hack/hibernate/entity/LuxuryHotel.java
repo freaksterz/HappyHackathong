@@ -79,8 +79,8 @@ public class LuxuryHotel implements java.io.Serializable {
 		this.hotelId = hotelId;
 		this.name = name;
 		this.sleepQuality = sleepQuality;
-		this.stopWord = stopWord;
-		this.biGram = biGram;
+//		this.stopWord = stopWord;
+//		this.biGram = biGram;
 	}
 
 	@Id
@@ -256,7 +256,7 @@ public class LuxuryHotel implements java.io.Serializable {
 		this.sleepQuality = sleepQuality;
 	}
 
-	@Column(name = "Stop_Word", length = 10000)
+/*	@Column(name = "Stop_Word", length = 10000)
 	public String getStopWord() {
 		return this.stopWord;
 	}
@@ -272,6 +272,6 @@ public class LuxuryHotel implements java.io.Serializable {
 
 	public void setBiGram(String biGram) {
 		this.biGram = biGram;
-	}
+	}*/
 
 }
