@@ -74,23 +74,7 @@ public class Sentiment {
 		float sentiment= sentimentSum == 0 || sentWordCount == 0? 0.0f : (sentimentSum/sentWordCount);
 		System.out.println("Sentiment="+sentiment);
 	}
+	
 
-	public ArrayList<String> tokenizer(String content) throws Exception {
-		ArrayList<String> lines = new ArrayList<String>();
-
-		ClassLoader classLoader = getClass().getClassLoader();
-		File file = new File(classLoader.getResource("en-sent.bin").getFile());
-		FileInputStream fileInputStream = new FileInputStream(file);
-		SentenceModel model = new SentenceModel(fileInputStream);
-		SentenceDetectorME detectorME = new SentenceDetectorME(model);
-		String[] sent = detectorME.sentDetect(content);
-		for (String string : sent) {
-			lines.add(string);
-		}
-		fileInputStream.close();
-
-		return lines;
-
-	}
 
 }

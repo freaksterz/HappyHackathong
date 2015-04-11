@@ -35,8 +35,4 @@ public class BiGrams {
 
 		
 	}
-	
-	public static void main(String[] args) {
-		biGramEngine("great cared hotel wonderful service terrible desk staff rude legitimate issue||  shame hotel great amenities||  lobby shops restaurant thankfully managed same people hotel||  hotel itself older seems well kept parking garage great asset l|| absent communication between desk housekeeping equates dirty rooms violations guests peace privacy||  worse deficiencies pointed out staff responds rude behavior empty promises||");
-	}
 }
