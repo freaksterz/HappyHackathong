@@ -9,7 +9,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
+import com.happy.hack.hibernate.dao.RawTableDAOImpl;
+import com.happy.hack.hibernate.entity.HotelData;
 import com.happy.hack.hibernate.entity.RawTable;
 
 public class ParseJSONToReadReviews {
@@ -31,13 +32,12 @@ public class ParseJSONToReadReviews {
 			JSONArray reviewsArray = (JSONArray) jsonObject.get("Reviews");
 			
 			
-			RawTable rawTable = new RawTable();
-			
-			hotelInfo.get("Name");
-			hotelInfo.get("HotelURL");
-			hotelInfo.get("Address");
-			hotelInfo.get("HotelID");
-			hotelInfo.get("ImgURL");
+			HotelData hotelData = new HotelData();
+						
+			hotelData.setHotelId(hotelInfo.get("HotelID").toString());
+			hotelData.setHotelUrl(hotelInfo.get("HotelURL").toString());
+			hotelData.setImgUrl(hotelInfo.get("ImgURL").toString());
+			hotelData.setName(hotelInfo.get("Name").toString());
 			
 			String price = (String) hotelInfo.get("Price");
 			
@@ -47,49 +47,64 @@ public class ParseJSONToReadReviews {
 			
 			float avg = (val1 + val2) / 2;
 			
-			
-			
+			hotelData.setAvgPrice((double) avg);
 			
 			
 			for( int i = 0; i < reviewsArray.size(); i++ ) {
 				
 				JSONObject review = (JSONObject) reviewsArray.get(i);
 				
+				RawTable rawTable = new RawTable();
 				
-				review.get("AuthorLocation");
-				review.get("Author");
-				review.get("Content");
-				review.get("Date");
-				review.get("Title");
-				review.get("ReviewID");
+				/*set hotel data */
+				rawTable.setHotelId(hotelData.getHotelId());
+				rawTable.setUrl(hotelData.getHotelUrl());
+				rawTable.setImgSrc(hotelData.getImgUrl());
+				rawTable.setAvgPrice(hotelData.getAvgPrice());
+				rawTable.setName(hotelData.getName());
+				
+				rawTable.setAuthor(review.get("Author").toString());
+				rawTable.setContent(review.get("Content").toString());
+				rawTable.setDate(review.get("Date").toString());
 				
 				
 				JSONObject ratings = (JSONObject) review.get("Ratings");
 				
 				
-				if ( null != ratings.get("Cleanliness") )
-					ratings.get("Cleanliness");
-				
-				if ( null != ratings.get("Location") )
-					ratings.get("Location");
-				
-				if ( null != ratings.get("Overall") )
-					ratings.get("Overall");
-				
-				if ( null != ratings.get("Rooms") )
-					ratings.get("Rooms");
-				
-				if ( null != ratings.get("Service") )
-					ratings.get("Service");
-				
-				if ( null != ratings.get("Sleep Quality") )
-					ratings.get("Sleep Quality");
-				
-				if ( null != ratings.get("Value") ){
-										
+				if ( null != ratings.get("Cleanliness") ) {
+					rawTable.setCleanliness(Float.parseFloat(ratings.get("Cleanliness").toString()));
 				}
 				
+				if ( null != ratings.get("Location") ){
+					rawTable.setLocations(Float.parseFloat(ratings.get("Location").toString()));
+				}
+				
+				if ( null != ratings.get("Overall") ){
+					rawTable.setOverallRating(Float.parseFloat(ratings.get("Overall").toString()));
+				}
+				
+				if ( null != ratings.get("Rooms") ){
+					rawTable.setRooms(Float.parseFloat(ratings.get("Rooms").toString()));
+				}
+				
+				if ( null != ratings.get("Service") ){
+					rawTable.setService(Float.parseFloat(ratings.get("Service").toString()));
+				}
+				
+				/*if ( null != ratings.get("Sleep Quality") ){
+					rawTable.setSleepQuality(Float.parseFloat(ratings.get("Sleep Quality").toString()));
+				}*/
+				
+				if ( null != ratings.get("Value") ){
+					rawTable.setValue(Float.parseFloat(ratings.get("Value").toString()));
+				}
+				
+				
+				RawTableDAOImpl rawTableDao = new RawTableDAOImpl();
+				rawTableDao.addRow(rawTable);
+				
 			}
+			
 			
 			
 		}
