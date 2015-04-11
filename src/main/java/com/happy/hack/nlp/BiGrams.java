@@ -3,13 +3,6 @@
  */
 package com.happy.hack.nlp;
 
-import java.util.List;
-
-import org.hibernate.Criteria;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-
-import com.salesorderapp.common.util.HibernateUtil;
 
 /**
  * @author saurabhshashank
@@ -23,7 +16,7 @@ import com.salesorderapp.common.util.HibernateUtil;
 public class BiGrams {
 	public void biGramsConnection() {}
 
-	public static String biGramEngine(String content) {
+	public static void biGramEngine(String content) {
 		// the line are sep by ||
 		StringBuffer biGrams = new StringBuffer();
 		String[] lines = content.split("\\|\\|");
@@ -34,10 +27,16 @@ public class BiGrams {
 					continue;
 				}
 				biGrams.append(words[i] + "-" + words[i + 1] + " ");
+//				Persist the data in the tables
+				System.out.println(biGrams);
+				biGrams=new StringBuffer();
 			}
 		}
-//		 Persist the data in the tables
 
-		return biGrams.toString();
+		
+	}
+	
+	public static void main(String[] args) {
+		biGramEngine("great cared hotel wonderful service terrible desk staff rude legitimate issue||  shame hotel great amenities||  lobby shops restaurant thankfully managed same people hotel||  hotel itself older seems well kept parking garage great asset l|| absent communication between desk housekeeping equates dirty rooms violations guests peace privacy||  worse deficiencies pointed out staff responds rude behavior empty promises||");
 	}
 }
