@@ -145,7 +145,7 @@ public class RawTable implements java.io.Serializable {
 		this.date = date;
 	}
 
-	@Column(name = "img_src", length = 45)
+	@Column(name = "img_src", length = 1000)
 	public String getImgSrc() {
 		return this.imgSrc;
 	}

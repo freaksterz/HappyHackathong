@@ -17,15 +17,15 @@ public class ParseJSONToReadReviews {
 	
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
-		File folder = new File("E:/gainsight/json");
+		File folder = new File("/home/freakster/Documents/gain/json_format/json");
 		File file[]=folder.listFiles();
-		
+		long counter = 0;
 		JSONParser parser = new JSONParser();
 		for (File file2 : file) {
 			System.out.println(file2.getAbsolutePath());
 			Object obj = parser.parse(new FileReader(file2.getAbsolutePath()));
 			JSONObject jsonObject = (JSONObject)obj;
-						
+
 			/* read review array and hotel info object */
 			
 			JSONObject hotelInfo = (JSONObject) jsonObject.get("HotelInfo");
@@ -35,25 +35,38 @@ public class ParseJSONToReadReviews {
 			HotelData hotelData = new HotelData();
 						
 			hotelData.setHotelId(hotelInfo.get("HotelID").toString());
-			hotelData.setHotelUrl(hotelInfo.get("HotelURL").toString());
-			hotelData.setImgUrl(hotelInfo.get("ImgURL").toString());
-			hotelData.setName(hotelInfo.get("Name").toString());
+			//hotelData.setHotelUrl(hotelInfo.get("HotelURL").toString());
+			//hotelData.setImgUrl(hotelInfo.get("ImgURL").toString());
+
+            if ( null != hotelInfo.get("Name") )
+			    hotelData.setName(hotelInfo.get("Name").toString());
 			
 			String price = (String) hotelInfo.get("Price");
-			
-			String[] val = price.split("-");
-			int val1 = Integer.parseInt(val[0].trim().replaceAll("[^0-9]", ""));
-			int val2 = Integer.parseInt(val[1].trim().replaceAll("[^0-9]", ""));
-			
-			float avg = (val1 + val2) / 2;
-			
-			hotelData.setAvgPrice((double) avg);
-			
+            System.out.println("price "+price);
+            String[] val = price.split("-");
+
+            if ( price.contains("-") ) {
+                int val1 = Integer.parseInt(val[0].trim().replaceAll("[^0-9]", ""));
+                int val2 = Integer.parseInt(val[1].trim().replaceAll("[^0-9]", ""));
+
+                float avg = (val1 + val2) / 2;
+
+                hotelData.setAvgPrice((double) avg);
+
+            } else if ( null != price && !price.isEmpty() && price.trim().length()!=0 ) {
+                try{
+                    hotelData.setAvgPrice( Double.parseDouble(price.replaceAll("[^0-9]", "")));
+                } catch( NumberFormatException e ){
+
+                }
+
+            }
+
 			
 			for( int i = 0; i < reviewsArray.size(); i++ ) {
 				
 				JSONObject review = (JSONObject) reviewsArray.get(i);
-				
+                counter++;
 				RawTable rawTable = new RawTable();
 				
 				/*set hotel data */
@@ -104,10 +117,11 @@ public class ParseJSONToReadReviews {
 				rawTableDao.addRow(rawTable);
 				
 			}
-			
-			
-			
-		}
+
+
+            System.out.println("counter = " + counter);
+
+        }
 	}
 	
 	
