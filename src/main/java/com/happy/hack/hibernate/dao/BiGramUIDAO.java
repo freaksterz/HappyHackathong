@@ -15,7 +15,7 @@ public interface BiGramUIDAO {
     void addBigram( BiGramUi bi);
     List<BiGramUi> getAllData();
 
-    List<Map<BiGram,Integer>> getBiGramInteger(float value, float rooms, float locations, float cleanliness, float checkIn, float service, float businessService , int sleepQuality) ;
+    List<Map<String, String>> getBiGramInteger(float value, float rooms, float locations, float cleanliness, float checkIn, float service, float businessService , int sleepQuality) ;
 
 
 
