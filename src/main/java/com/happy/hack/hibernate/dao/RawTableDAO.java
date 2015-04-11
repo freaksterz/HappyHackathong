@@ -1,6 +1,5 @@
 package com.happy.hack.hibernate.dao;
 
-
 import com.happy.hack.hibernate.entity.RawTable;
 
 /**

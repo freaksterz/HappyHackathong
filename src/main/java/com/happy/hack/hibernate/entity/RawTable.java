@@ -1,4 +1,6 @@
-package com.hib.anno;
+package com.happy.hack.hibernate.entity;
+
+
 
 // Generated 11 Apr, 2015 7:37:56 PM by Hibernate Tools 4.0.0
 
