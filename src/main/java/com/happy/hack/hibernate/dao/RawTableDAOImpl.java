@@ -32,6 +32,7 @@ public class RawTableDAOImpl implements RawTableDAO {
         Transaction transaction = session.beginTransaction();
         Query query = session.createQuery("from RawTable");
         List<RawTable> rowList = query.list();
+        transaction.commit();
         return rowList;
     }
 
