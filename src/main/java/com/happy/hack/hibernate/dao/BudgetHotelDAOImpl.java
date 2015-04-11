@@ -15,6 +15,11 @@ public class BudgetHotelDAOImpl implements BudgetHotelDAO {
 
     @Override
     public List<BudgetHotel> getAllData() {
-        return null;
+    	 Session session = HibernateUtil.getSession();
+         Transaction transaction = session.beginTransaction();
+         Query query = session.createQuery("from BudgetHotel");
+         List<BudgetHotel> rowList = query.list();
+         transaction.commit();
+         return rowList;
     }
 }

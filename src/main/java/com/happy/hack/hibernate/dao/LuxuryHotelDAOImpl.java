@@ -16,6 +16,11 @@ public class LuxuryHotelDAOImpl implements LuxuryHotelDAO {
 
     @Override
     public List<LuxuryHotel> getAllData() {
-        return null;
+        Session session = HibernateUtil.getSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("from LuxuryHotel");
+        List<LuxuryHotel> rowList = query.list();
+        transaction.commit();
+        return rowList;
     }
 }

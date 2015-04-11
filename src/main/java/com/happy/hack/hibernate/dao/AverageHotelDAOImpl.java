@@ -15,6 +15,11 @@ public class AverageHotelDAOImpl implements AverageHotelDAO {
 
     @Override
     public List<AverageHotel> getAllData() {
-        return null;
+    	 Session session = HibernateUtil.getSession();
+         Transaction transaction = session.beginTransaction();
+         Query query = session.createQuery("from AverageHotel");
+         List<AverageHotel> rowList = query.list();
+         transaction.commit();
+         return rowList;
     }
 }
