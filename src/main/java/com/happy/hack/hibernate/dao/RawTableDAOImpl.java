@@ -20,7 +20,7 @@ public class RawTableDAOImpl implements RawTableDAO {
     }
 
     @Override
-    public String getcolumn(String columnname) {
+    public String getColumn(String columnname) {
         return null;
     }
 }

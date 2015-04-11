@@ -9,7 +9,7 @@ import com.happy.hack.hibernate.entity.RawTable;
 public interface RawTableDAO {
 
     void addRow(RawTable rw);
-    String getcolumn(String columnname);
+    String getColumn(String columnname);
 
 
 
