@@ -42,6 +42,7 @@ public class BiGramUIServices {
         csDAO.addCustomer(customer);
         return Response.ok(csDAO).build();
         //(customer, uriInfo);*/
+        return null;
     }
 
 }
