@@ -15,9 +15,10 @@
         <property name="hibernate.search.autoregister_listeners">false</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.validator.apply_to_ddl">false</property>
-        <mapping class="com.hib.annotation.RawTable" />
-        <mapping class="com.hib.annotation.Budget" />
-        <mapping class="com.hib.annotation.Luxury" />
-        <mapping class="com.hib.annotation.Average" />
+        <mapping class="com.happy.hack.hibernate.entity.RawTable" />
+        <mapping class="com.happy.hack.hibernate.entity.BudgetHotel" />
+        <mapping class="com.happy.hack.hibernate.entity.LuxuryHotel" />
+        <mapping class="com.happy.hack.hibernate.entity.AverageHotel" />
+
     </session-factory>
 </hibernate-configuration>
