@@ -1,4 +1,4 @@
-package com.hib.annotation;
+package com.happy.hack.hibernate.entity;
 
 // Generated 11 Apr, 2015 5:10:44 PM by Hibernate Tools 4.0.0
 
