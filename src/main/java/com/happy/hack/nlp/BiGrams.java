@@ -3,7 +3,9 @@
  */
 package com.happy.hack.nlp;
 
+import com.happy.hack.hibernate.dao.BiGramLuxuryDAOImpl;
 import com.happy.hack.hibernate.dao.LuxuryHotelDAOImpl;
+import com.happy.hack.hibernate.entity.BiGramLuxury;
 import com.happy.hack.hibernate.entity.LuxuryHotel;
 
 
@@ -28,7 +30,18 @@ public class BiGrams {
 					continue;
 				}
 				biGrams.append(words[i] + "-" + words[i + 1] + " ");
-//				Persist the data in the tables
+//				Persist the data in the tables bi-gram,value,....
+				BiGramLuxury biGramLuxury=new BiGramLuxury();
+				biGramLuxury.setContent(biGrams.toString());
+				biGramLuxury.setBusinessService(hotel.getBusinessService());
+				biGramLuxury.setChekIn(hotel.getChekIn());
+				biGramLuxury.setCleanliness(hotel.getCleanliness());
+				biGramLuxury.setLocations(hotel.getLocations());
+				biGramLuxury.setRooms(hotel.getRooms());
+				biGramLuxury.setService(hotel.getService());
+//				biGramLuxury.setSleepQuality(hotel.getSleepQuality());
+				biGramLuxury.setValue(hotel.getValue());
+				new BiGramLuxuryDAOImpl().addRow(biGramLuxury); 
 				System.out.println(biGrams);
 				biGrams=new StringBuffer();
 			}
