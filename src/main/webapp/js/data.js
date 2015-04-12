@@ -52,24 +52,29 @@ var sliderTooltip = function(event, ui) {
 
 function getData(){
 
+
+    var sendData = {
+                   			"value" : $("#value").slider('value'),
+                   			"rooms" : $("#rooms").slider('value'),
+                   			"cleanliness" : $("#cleanliness").slider('value'),
+                   			"service" : $("#service").slider('value'),
+                   			"type" : $(".active").attr("id"),
+                   			"bussService" : $("#businessservices").slider('value'),
+                   			"locations" : $("#location").slider('value'),
+                   			"checkIn" : $("#checkinCheckout").slider('value')
+                   		};
+
 	$.ajax({
 		method : "POST",
-		url : "",
+		url : "/salesorderapp/rest/BiGrams/",
 		dataType : "json",
-		data : {
-			"value" : $("#value").slider('value'),
-			"rooms" : $("#rooms").slider('value'),
-			"cleanliness" : $("#cleanliness").slider('value'),
-			"service" : $("#service").slider('value'),
-			"type" : $(".active").val(),
-			"bussService" : $("#businessservices").slider('value'),
-			"locations" : $("#location").slider('value'),
-			"checkIn" : $("#checkinCheckout").slider('value')
-		},
+		contentType: 'application/json',
+		data : JSON.stringify(sendData),
 		success: function(response){
 			console.log("response");
 			console.log(response);
-			$('#keywords').jQCloud('update', response);
+
+			$('#wordCloud').jQCloud('update', response);
 		},
 		error: function(err){
 			alert(err);

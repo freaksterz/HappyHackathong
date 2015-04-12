@@ -13,7 +13,12 @@ import java.util.List;
  */
 public class AverageHotelDAOImpl implements AverageHotelDAO {
     @Override
-    public void addRow(AverageHotel rw) {
+    public void addRow(AverageHotel averageHotel) {
+
+        Session session = HibernateUtil.getSession();
+        Transaction transaction = session.beginTransaction();
+        session.save(averageHotel);
+        transaction.commit();
 
     }
 

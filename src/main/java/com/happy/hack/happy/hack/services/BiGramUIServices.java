@@ -1,10 +1,10 @@
 package com.happy.hack.happy.hack.services;
 
-import com.happy.hack.hibernate.dao.BiGramUIDAOImpl;
-import com.happy.hack.hibernate.entity.BiGram;
-import com.happy.hack.hibernate.entity.BiGramUi;
-import com.sun.jersey.api.client.ClientResponse;
-import org.codehaus.jackson.map.ObjectMapper;
+
+import com.google.gson.JsonObject;
+import com.happy.hack.hibernate.dao.BiGramUIBudgetDAOImpl;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +15,8 @@ import javax.ws.rs.Produces;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -23,28 +25,38 @@ import javax.ws.rs.core.Response;
 @Path("/BiGrams")
 public class BiGramUIServices {
 
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/BigramsServices")
-    public Response getBiGramServices(HttpServletRequest req, HttpServletResponse res ) {
+    //@Produces(MediaType.APPLICATION_JSON)
+    public String getBiGramServices(String req ) {
+
+        System.out.println("req = " + req);
 
 
-        String type = req.getParameter("type");
-        float value = Float.parseFloat(req.getParameter("value"));
-        float rooms = Float.parseFloat(req.getParameter("rooms"));
-        float locations = Float.parseFloat(req.getParameter("locations"));
-        float cleanliness = Float.parseFloat(req.getParameter("cleanliness"));
-        float checkIn = Float.parseFloat(req.getParameter("checkIn"));
-        float service = Float.parseFloat(req.getParameter("service"));
-        float bussService = Float.parseFloat(req.getParameter("bussService"));
-        int sleepQuality = Integer.parseInt(req.getParameter("sleepQuality"));
+        JSONObject jsonObject = new JSONObject(req);
+        //JSONObject abc = (JSONObject)jsonObject.get("jsonObject");
+        System.out.println(jsonObject.get("value"));
+        String type = jsonObject.get("type").toString();
+        float value = Float.parseFloat(jsonObject.get("value").toString());
+        float rooms = Float.parseFloat(jsonObject.get("rooms").toString());
+        float locations = Float.parseFloat(jsonObject.get("locations").toString());
+        float cleanliness = Float.parseFloat(jsonObject.get("cleanliness").toString());
+        float checkIn = Float.parseFloat(jsonObject.get("checkIn").toString());
+        float service = Float.parseFloat(jsonObject.get("service").toString());
+        float bussService = Float.parseFloat(jsonObject.get("bussService").toString());
+
+        //int sleepQuality = Integer.parseInt(req.getParameter("sleepQuality"));
 
 
-        BiGramUIDAOImpl biGramUIDAO = new BiGramUIDAOImpl();
-        biGramUIDAO.getBiGramInteger(value, rooms, locations, cleanliness, checkIn, service, bussService, sleepQuality);
+        BiGramUIBudgetDAOImpl biGramUIDAO = new BiGramUIBudgetDAOImpl();
+        List<Map<String, String>> list=  biGramUIDAO.getBiGramInteger(value, rooms, locations, cleanliness, checkIn, service, bussService);
 
-        return Response.ok(biGramUIDAO).build();
+        JSONObject obj = new JSONObject();
+        JSONArray array = new JSONArray(list);
+        //return Response.ok(biGramUIDAO).build();
+        return array.toString();
+        //return  Response.ok(array).build();
     }
 
 }

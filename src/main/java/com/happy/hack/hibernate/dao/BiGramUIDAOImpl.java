@@ -28,13 +28,12 @@ public class BiGramUIDAOImpl implements BiGramUIDAO {
     }
 
     @Override
-    public List<Map<String, String>> getBiGramInteger(float value, float rooms, float locations, float cleanliness, float checkIn, float service, float businessService, int sleepQuality) {
+    public List<Map<String, String>> getBiGramInteger(float value, float rooms, float locations, float cleanliness, float checkIn, float service, float businessService) {
 
         Session session = HibernateUtil.getSession();
         Transaction transaction = session.beginTransaction();
         Query query = session.createQuery("from BiGram where Value <= :value AND Rooms <= :rooms AND Locations <= :locations " +
-                "AND Cleanliness <= :cleanliness AND ChekIn <= :checkin AND Service <= :service AND BusinessService <= :bussService " +
-                "AND SleepQuality <= :sleepQty");
+                "AND Cleanliness <= :cleanliness AND ChekIn <= :checkin AND Service <= :service AND BusinessService <= :bussService " );
 
         query.setParameter("value", value);
         query.setParameter("rooms", rooms);
@@ -43,7 +42,7 @@ public class BiGramUIDAOImpl implements BiGramUIDAO {
         query.setParameter("checkin", checkIn);
         query.setParameter("service", service);
         query.setParameter("bussService", businessService);
-        query.setParameter("sleepQty", sleepQuality);
+        //query.setParameter("sleepQty", sleepQuality);
 
 
         List<BiGramUi> rowList = query.list();
@@ -53,10 +52,10 @@ public class BiGramUIDAOImpl implements BiGramUIDAO {
         for (int i = 0; i < rowList.size(); i++) {
             BiGramUi biGramUi = (BiGramUi)rowList.get(i);
             //if( (rawTable.getValue() <= value) && rawTable.getRooms() <= rooms && rawTable.getLocations() <= locations && (rawTable.getCleanliness() <=cleanliness) && (rawTable.getChekIn() <= checkIn) && (rawTable.getService() <= service) && (rawTable.getBusinessService() <= businessService) && (rawTable.getSleepQuality() <= sleepQuality)){
-             Map<String, String> map = new HashMap<String,String>();
-              map.put("text", biGramUi.getBiGram());
-              map.put("weight", Float.toString(biGramUi.getCount()));
-              mapList.add(map);
+            Map<String, String> map = new HashMap<String,String>();
+            map.put("text", biGramUi.getBiGram());
+            map.put("weight", Float.toString(biGramUi.getCount()));
+            mapList.add(map);
 
             //}
 
