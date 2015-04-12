@@ -57,7 +57,7 @@ public class TripletAverage {
 			}
 		}
 //		
-		System.out.println("\nNP=" + NP + "\tVP=" + VP);
+//		System.out.println("\nNP=" + NP + "\tVP=" + VP);
 //		TODO remove stop words
 		aspect[0]=NP;
 		aspect[1]=VP;
@@ -103,9 +103,11 @@ public class TripletAverage {
 				for (Parse parse : topParses) {
 //					returns NP & VP
 					String[] aspect=IE(parse.getChildren()[0]);
-					String nounPhrase=StopWordRemoval.getStopWordRemoval(aspect[0]);
-					String verbPhrase=StopWordRemoval.getStopWordRemoval(aspect[0]);
-
+					String nounPhrase=StopWordRemoval.getStopWordRemoval(aspect[0]).replaceAll("\\|\\|", " ");
+					String verbPhrase=StopWordRemoval.getStopWordRemoval(aspect[1]).replaceAll("\\|\\|", " ");
+					System.out.print("NP="+nounPhrase+"\t");
+					System.out.print("NP="+verbPhrase+"\t");
+					System.out.println("Sentiment"+sentiment);
 					if (nounPhrase.isEmpty() || verbPhrase.isEmpty() || nounPhrase.split(" ").length > 2 || verbPhrase.split(" ").length > 2 ) {
 						continue;
 					}else{
@@ -135,7 +137,6 @@ public class TripletAverage {
 	public static void main(String[] args) throws Exception {
 //		new Triplet().tokenizer(" Good service, great facilities True, Downtown Los Angeles is a dodgy place to stay, but if you must be in the area, Clarion is a good choice. We went to see a show in Club Nokia and chose this hotel due to its close proximity to the venue and the cheap price (I work in the travel industry and after my employee discount the price was rediculously low for an L.A accomodation). We had initially planned to walk to the venue, but the receptionists advised us against it an booked us a cab. The hotel might be old but well-maintained. Public facilities are clean and pleasant. Room was big, equipped with a TV set, refrigirator and coffee making facilites - none of which we used, but all looked clean. Bathroom was spotless, water in the shower pipping hot and with high pressure, bathroom amenities of better quality than what you find in most places. There's free parking for hotel guests, which is a great advantage. Will book there again if needed.");
 		AverageHotelDAOImpl DAO=new AverageHotelDAOImpl();
-		DAO.getAllData();
 		for (AverageHotel lh : DAO.getAllData()) {
 			new TripletAverage().triplet(lh);
 		}

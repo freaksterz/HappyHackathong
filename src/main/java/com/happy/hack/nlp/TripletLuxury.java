@@ -12,6 +12,7 @@ import javafx.geometry.VPos;
 
 import com.happy.hack.hibernate.dao.LuxuryHotelDAOImpl;
 import com.happy.hack.hibernate.entity.LuxuryHotel;
+import com.happy.hack.test.JDBCConnection;
 
 import opennlp.tools.cmdline.parser.ParserTool;
 import opennlp.tools.parser.Parse;
@@ -32,7 +33,7 @@ import opennlp.tools.util.InvalidFormatException;
  */
 public class TripletLuxury {
 	public static String[] IE(Parse parse) {
-		String[] aspect=new String[2];
+		String[] aspect=new String[3];
 		String NP = "", VP = "", obj;
 //		parse.show();
 		if (parse.getType().equals("S")) {
@@ -101,14 +102,15 @@ public class TripletLuxury {
 				for (Parse parse : topParses) {
 //					returns NP & VP
 					String[] aspect=IE(parse.getChildren()[0]);
-					String nounPhrase=StopWordRemoval.getStopWordRemoval(aspect[0]);
-					String verbPhrase=StopWordRemoval.getStopWordRemoval(aspect[0]);
+					String nounPhrase=StopWordRemoval.getStopWordRemoval(aspect[0]).split("\\|\\|")[0];
+					String verbPhrase=StopWordRemoval.getStopWordRemoval(aspect[1]).split("\\|\\|")[0];
 
-					if (nounPhrase.isEmpty() || verbPhrase.isEmpty() || nounPhrase.split(" ").length > 2 || verbPhrase.split(" ").length > 2 ) {
+					if (nounPhrase.isEmpty() || verbPhrase.isEmpty() || nounPhrase.split(" ").length > 4 || verbPhrase.split(" ").length > 4 ) {
 						continue;
 					}else{
 //						TODO persist apsect with sentiment too. so better get sentiment for the content here and do what ever you want to do man
-
+						aspect[2]=sentiment;
+						new JDBCConnection().insert(aspect);
 					}
 				}
 			}
@@ -133,7 +135,7 @@ public class TripletLuxury {
 	public static void main(String[] args) throws Exception {
 //		new Triplet().tokenizer(" Good service, great facilities True, Downtown Los Angeles is a dodgy place to stay, but if you must be in the area, Clarion is a good choice. We went to see a show in Club Nokia and chose this hotel due to its close proximity to the venue and the cheap price (I work in the travel industry and after my employee discount the price was rediculously low for an L.A accomodation). We had initially planned to walk to the venue, but the receptionists advised us against it an booked us a cab. The hotel might be old but well-maintained. Public facilities are clean and pleasant. Room was big, equipped with a TV set, refrigirator and coffee making facilites - none of which we used, but all looked clean. Bathroom was spotless, water in the shower pipping hot and with high pressure, bathroom amenities of better quality than what you find in most places. There's free parking for hotel guests, which is a great advantage. Will book there again if needed.");
 		LuxuryHotelDAOImpl DAO=new LuxuryHotelDAOImpl();
-		DAO.getAllData();
+//		DAO.getAllData();
 		for (LuxuryHotel lh : DAO.getAllData()) {
 			new TripletLuxury().triplet(lh);
 		}
