@@ -50,7 +50,7 @@ public class BiGramUIServices {
 
 
         BiGramUIBudgetDAOImpl biGramUIDAO = new BiGramUIBudgetDAOImpl();
-        List<Map<String, String>> list=  biGramUIDAO.getBiGramInteger(value, rooms, locations, cleanliness, checkIn, service, bussService);
+        List<Map<String, String>> list=  biGramUIDAO.getBiGramInteger(value, rooms, locations, cleanliness, checkIn, service, bussService, type);
 
         JSONObject obj = new JSONObject();
         JSONArray array = new JSONArray(list);

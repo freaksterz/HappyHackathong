@@ -1,7 +1,9 @@
 package com.happy.hack.hibernate.dao;
 
+import com.happy.hack.common.util.JDBCConnection;
 import com.happy.hack.hibernate.entity.BiGram;
 import com.happy.hack.hibernate.entity.BiGramUi;
+import com.happy.hack.hibernate.entity.BiGramUiluxury;
 import com.happy.hack.hibernate.entity.RawTable;
 import com.salesorderapp.common.util.HibernateUtil;
 import org.hibernate.Query;
@@ -28,12 +30,14 @@ public class BiGramUIDAOImpl implements BiGramUIDAO {
     }
 
     @Override
-    public List<Map<String, String>> getBiGramInteger(float value, float rooms, float locations, float cleanliness, float checkIn, float service, float businessService) {
+    public List<Map<String, String>> getBiGramInteger(float value, float rooms, float locations, float cleanliness, float checkIn, float service, float businessService ,String type) {
 
-        Session session = HibernateUtil.getSession();
+
+        return JDBCConnection.getLuxury(value, rooms, locations, cleanliness, checkIn, service, businessService ,type);
+       /* Session session = HibernateUtil.getSession();
         Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("from BiGram where Value <= :value AND Rooms <= :rooms AND Locations <= :locations " +
-                "AND Cleanliness <= :cleanliness AND ChekIn <= :checkin AND Service <= :service AND BusinessService <= :bussService " );
+        Query query = session.createQuery("from BiGramUiluxury where Value <= :value AND Rooms <= :rooms AND Locations <= :locations " +
+                "AND Cleanliness <= :cleanliness AND ChekIn <= :checkin AND Service <= :service AND BusinessService <= :bussService" );
 
         query.setParameter("value", value);
         query.setParameter("rooms", rooms);
@@ -45,12 +49,12 @@ public class BiGramUIDAOImpl implements BiGramUIDAO {
         //query.setParameter("sleepQty", sleepQuality);
 
 
-        List<BiGramUi> rowList = query.list();
+        List<BiGramUiluxury> rowList = query.list();
 
         List<Map<String, String>> mapList = new ArrayList<Map<String, String>>();
 
         for (int i = 0; i < rowList.size(); i++) {
-            BiGramUi biGramUi = (BiGramUi)rowList.get(i);
+            BiGramUiluxury biGramUi = (BiGramUiluxury)rowList.get(i);
             //if( (rawTable.getValue() <= value) && rawTable.getRooms() <= rooms && rawTable.getLocations() <= locations && (rawTable.getCleanliness() <=cleanliness) && (rawTable.getChekIn() <= checkIn) && (rawTable.getService() <= service) && (rawTable.getBusinessService() <= businessService) && (rawTable.getSleepQuality() <= sleepQuality)){
             Map<String, String> map = new HashMap<String,String>();
             map.put("text", biGramUi.getBiGram());
@@ -61,7 +65,7 @@ public class BiGramUIDAOImpl implements BiGramUIDAO {
 
         }
 
-        return mapList;
+        return mapList;*/
 
     }
 }

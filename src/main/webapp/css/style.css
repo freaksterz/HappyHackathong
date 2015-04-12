@@ -2,13 +2,17 @@
 	margin-top: 50px;
 }
 
+.mb50{
+	margin-bottom: 50px;
+}
+
 .header-container{
 	background: none repeat scroll 0 0 black;
     color: white;
 }
 
 #wordCloud{
-	min-height: 200px;
+	min-height: 500px;
 	border: 1px solid #ccc;
 }
 

@@ -1,16 +1,12 @@
 package com.happy.hack.hibernate.dao;
 
-import com.happy.hack.hibernate.entity.BiGramUi;
-import com.happy.hack.hibernate.entity.BiGramUiluxury;
-import org.hibernate.Query;
+import com.happy.hack.common.util.JDBCConnection;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.happy.hack.hibernate.entity.BiGramUibudget;
 import com.salesorderapp.common.util.HibernateUtil;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,12 +22,15 @@ public class BiGramUIBudgetDAOImpl implements BiGramUIBudgetDAO {
 	}
 
     @Override
-    public List<Map<String, String>> getBiGramInteger(float value, float rooms, float locations, float cleanliness, float checkIn, float service, float businessService) {
+    public List<Map<String, String>> getBiGramInteger(float value, float rooms, float locations, float cleanliness, float checkIn, float service, float businessService, String type) {
 
-        Session session = HibernateUtil.getSession();
+
+        return JDBCConnection.getLuxury(value, rooms, locations, cleanliness, checkIn, service, businessService, type);
+
+        /*Session session = HibernateUtil.getSession();
         Transaction transaction = session.beginTransaction();
         Query query = session.createQuery("from BiGramUiluxury where Value <= :value AND Rooms <= :rooms AND Locations <= :locations " +
-                "AND Cleanliness <= :cleanliness AND ChekIn <= :checkin AND Service <= :service AND BusinessService <= :bussService " );
+                "AND Cleanliness <= :cleanliness AND ChekIn <= :checkin AND Service <= :service AND BusinessService <= :bussService ORDER BY Count" );
 
         query.setParameter("value", value);
         query.setParameter("rooms", rooms);
@@ -43,7 +42,16 @@ public class BiGramUIBudgetDAOImpl implements BiGramUIBudgetDAO {
         //query.setParameter("sleepQty", sleepQuality);
 
 
-        List<BiGramUiluxury> rowList = query.list();
+      List<BiGramUiluxury> rowList = query.list();
+
+        //Criteria criteria = session.createCriteria(BiGramUiluxury.class).setProjection(Projections.projectionList()).add(Projections.property("value"),"value").add(Projections.property("rooms"),"rooms")
+
+        *//*ProjectionList projList = Projections.projectionList();
+        projList.add(Projections.groupProperty("par"), "parAlias");
+        projList.add(Projections.rowCount(), "countAlias");
+        criteria.setProjection(projList);
+
+        criteria.setResultTransformer(Transformers.aliasToBean(ObjDto.class));*//*
 
         List<Map<String, String>> mapList = new ArrayList<Map<String, String>>();
 
@@ -59,7 +67,7 @@ public class BiGramUIBudgetDAOImpl implements BiGramUIBudgetDAO {
 
         }
 
-        return mapList;
+        return mapList;*/
 
     }
 
