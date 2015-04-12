@@ -19,6 +19,12 @@
         <mapping class="com.happy.hack.hibernate.entity.BudgetHotel" />
         <mapping class="com.happy.hack.hibernate.entity.LuxuryHotel" />
         <mapping class="com.happy.hack.hibernate.entity.AverageHotel" />
+        <mapping class="com.happy.hack.hibernate.entity.BiGramAverage" />
+        <mapping class="com.happy.hack.hibernate.entity.BiGramBudget" />
+        <mapping class="com.happy.hack.hibernate.entity.BiGramLuxury" />
+        <mapping class="com.happy.hack.hibernate.entity.BiGramUiaverage" />
+        <mapping class="com.happy.hack.hibernate.entity.BiGramUibudget" />
+        <mapping class="com.happy.hack.hibernate.entity.BiGramUiluxury" />
 
     </session-factory>
 </hibernate-configuration>

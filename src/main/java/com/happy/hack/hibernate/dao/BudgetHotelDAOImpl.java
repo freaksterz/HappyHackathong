@@ -1,5 +1,6 @@
 package com.happy.hack.hibernate.dao;
 
+import com.happy.hack.hibernate.entity.BiGramBudget;
 import com.happy.hack.hibernate.entity.BudgetHotel;
 import com.salesorderapp.common.util.HibernateUtil;
 import org.hibernate.Query;
@@ -13,7 +14,13 @@ import java.util.List;
  */
 public class BudgetHotelDAOImpl implements BudgetHotelDAO {
     @Override
-    public void addRow(BudgetHotel rw) {
+    public void addRow(BiGramBudget rw) {
+
+    	Session session = HibernateUtil.getSession();
+        Transaction transaction = session.beginTransaction();
+        session.save(rw);
+        transaction.commit();
+
 
     }
 

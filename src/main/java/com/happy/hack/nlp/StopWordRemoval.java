@@ -70,7 +70,7 @@ public class StopWordRemoval {
 				sample_wostop=sample_wostop+x+"||";
 		}
 
-		System.out.println(sample_wostop);
+//		System.out.println(sample_wostop);
 		return sample_wostop;
 
 	}

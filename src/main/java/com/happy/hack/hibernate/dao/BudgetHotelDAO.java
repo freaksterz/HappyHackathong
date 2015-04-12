@@ -1,5 +1,6 @@
 package com.happy.hack.hibernate.dao;
 
+import com.happy.hack.hibernate.entity.BiGramBudget;
 import com.happy.hack.hibernate.entity.BudgetHotel;
 import com.happy.hack.hibernate.entity.RawTable;
 
@@ -10,7 +11,7 @@ import java.util.List;
  */
 public interface BudgetHotelDAO {
 
-    void addRow(BudgetHotel rw);
+    void addRow(BiGramBudget rw);
     List<BudgetHotel> getAllData();
 
 
