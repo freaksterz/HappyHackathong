@@ -9,11 +9,11 @@ $(function(){
 			value: 2.5,
 			change: function(event, ui) {
 
-				var sliderType = $(this).attr("id");
+				/*var sliderType = $(this).attr("id");
 				var value = ui.value;
 				console.log( sliderType );
 				console.log( value );
-				getData();
+				getData();*/
 			},
 			create: sliderTooltip,
 			slide: sliderTooltip
@@ -30,11 +30,20 @@ $(function(){
 		
 		
 		 $(".container").on("click", ".btn.btn-default",function(){
-			$(".btn.btn-default").removeClass("active");
-			$(this).addClass("active");
+			 $(this).attr("disabled", true);
+			 $(".btn.btn-default").removeClass("active");
+			 $(this).addClass("active");
+			 getData();			
+			
 		 });
+		 
+		 
 
-
+		 $(".container").on("click", ".btn.btn-success",function(){
+			 $(this).attr("disabled", true);
+			 getData();
+		 });
+		 
 		getData();
 		
 });
@@ -52,17 +61,17 @@ var sliderTooltip = function(event, ui) {
 
 function getData(){
 
-
+	$("body").css("cursor", "wait");
     var sendData = {
-                   			"value" : $("#value").slider('value'),
-                   			"rooms" : $("#rooms").slider('value'),
-                   			"cleanliness" : $("#cleanliness").slider('value'),
-                   			"service" : $("#service").slider('value'),
-                   			"type" : $(".active").attr("id"),
-                   			"bussService" : $("#businessservices").slider('value'),
-                   			"locations" : $("#location").slider('value'),
-                   			"checkIn" : $("#checkinCheckout").slider('value')
-                   		};
+           			"value" : $("#value").slider('value'),
+           			"rooms" : $("#rooms").slider('value'),
+           			"cleanliness" : $("#cleanliness").slider('value'),
+           			"service" : $("#service").slider('value'),
+           			"type" : $(".active").attr("id"),
+           			"bussService" : $("#businessservices").slider('value'),
+           			"locations" : $("#location").slider('value'),
+           			"checkIn" : 0 //$("#checkinCheckout").slider('value')
+           		};
 
 	$.ajax({
 		method : "POST",
@@ -71,13 +80,17 @@ function getData(){
 		contentType: 'application/json',
 		data : JSON.stringify(sendData),
 		success: function(response){
-			console.log("response");
-			console.log(response);
-
+			$("body").css("cursor", "default");
+			$(".btn.btn-success").attr("disabled", false);
+			$(".btn.btn-default").attr("disabled", false);
 			$('#wordCloud').jQCloud('update', response);
 		},
 		error: function(err){
-			alert(err);
+			$(".btn.btn-success").attr("disabled", false);
+			$(".btn.btn-default").attr("disabled", false);
+			$("body").css("cursor", "default");
+			alert(err.statusText);
+			console.log(err);
 		}
 	})
 }
