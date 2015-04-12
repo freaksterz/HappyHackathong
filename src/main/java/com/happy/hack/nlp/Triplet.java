@@ -121,8 +121,8 @@ public class Triplet {
 	public  ArrayList<String> tokenizer(String content) throws Exception {
 		ArrayList<String> lines = new ArrayList<String>();
 
-		ClassLoader classLoader = getClass().getClassLoader();
-		File file = new File(classLoader.getResource("en-sent.bin").getFile());
+		
+		File file = new File("C:/Users/Kumar Ankit/git/HappyHackathong/src/main/resources/en-sent.bin");
 		FileInputStream fileInputStream = new FileInputStream(file);
 		SentenceModel model = new SentenceModel(fileInputStream);
 		SentenceDetectorME detectorME = new SentenceDetectorME(model);

@@ -16,7 +16,10 @@ public class BudgetHotelDAOImpl implements BudgetHotelDAO {
     @Override
     public void addRow(BiGramBudget rw) {
 
-
+    	Session session = HibernateUtil.getSession();
+        Transaction transaction = session.beginTransaction();
+        session.save(rw);
+        transaction.commit();
 
 
     }
