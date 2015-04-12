@@ -35,8 +35,8 @@ public class LuxuryHotel implements java.io.Serializable {
 	private String hotelId;
 	private String name;
 	private int sleepQuality;
-	private String stopWord;
-	private String biGram;
+//	private String stopWord;
+//	private String biGram;
 
 	public LuxuryHotel() {
 	}
