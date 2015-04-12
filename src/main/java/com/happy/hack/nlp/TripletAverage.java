@@ -8,6 +8,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javafx.geometry.VPos;
+
+import com.happy.hack.hibernate.dao.AverageHotelDAOImpl;
+import com.happy.hack.hibernate.dao.LuxuryHotelDAOImpl;
+import com.happy.hack.hibernate.entity.AverageHotel;
+import com.happy.hack.hibernate.entity.LuxuryHotel;
+
 import opennlp.tools.cmdline.parser.ParserTool;
 import opennlp.tools.parser.Parse;
 import opennlp.tools.parser.Parser;
@@ -25,7 +32,7 @@ import opennlp.tools.util.InvalidFormatException;
  *         NLP parser. Parsing the parse tree.
  *         </p>
  */
-public class Triplet {
+public class TripletAverage {
 	public static String[] IE(Parse parse) {
 		String[] aspect=new String[2];
 		String NP = "", VP = "", obj;
@@ -78,8 +85,10 @@ public class Triplet {
 		}
 	}
 
-	public void triplet(String content) throws Exception {
-		ArrayList<String> lines = tokenizer(content);
+	public void triplet(AverageHotel hotel) throws Exception {
+		ArrayList<String> lines = tokenizer(hotel.getContent());
+//		get sentiment for the content
+		String sentiment=new Sentiment().sentimet(hotel.getContent());
 		ClassLoader classLoader = getClass().getClassLoader();
 		File file = new File(classLoader.getResource("en-parser-chunking.bin")
 				.getFile());
@@ -92,8 +101,17 @@ public class Triplet {
 			for (String line : lines) {
 				Parse topParses[] = ParserTool.parseLine(line, parser, 1);
 				for (Parse parse : topParses) {
+//					returns NP & VP
 					String[] aspect=IE(parse.getChildren()[0]);
-//					TODO persist apsect with sentiment too. so better get sentiment for the content here and do what ever you want to do man
+					String nounPhrase=StopWordRemoval.getStopWordRemoval(aspect[0]);
+					String verbPhrase=StopWordRemoval.getStopWordRemoval(aspect[0]);
+
+					if (nounPhrase.isEmpty() || verbPhrase.isEmpty() || nounPhrase.split(" ").length > 2 || verbPhrase.split(" ").length > 2 ) {
+						continue;
+					}else{
+//						TODO persist apsect with sentiment too. so better get sentiment for the content here and do what ever you want to do man
+
+					}
 				}
 			}
 
@@ -115,7 +133,13 @@ public class Triplet {
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
-		new Triplet().tokenizer(" Good service, great facilities True, Downtown Los Angeles is a dodgy place to stay, but if you must be in the area, Clarion is a good choice. We went to see a show in Club Nokia and chose this hotel due to its close proximity to the venue and the cheap price (I work in the travel industry and after my employee discount the price was rediculously low for an L.A accomodation). We had initially planned to walk to the venue, but the receptionists advised us against it an booked us a cab. The hotel might be old but well-maintained. Public facilities are clean and pleasant. Room was big, equipped with a TV set, refrigirator and coffee making facilites - none of which we used, but all looked clean. Bathroom was spotless, water in the shower pipping hot and with high pressure, bathroom amenities of better quality than what you find in most places. There's free parking for hotel guests, which is a great advantage. Will book there again if needed.");
+//		new Triplet().tokenizer(" Good service, great facilities True, Downtown Los Angeles is a dodgy place to stay, but if you must be in the area, Clarion is a good choice. We went to see a show in Club Nokia and chose this hotel due to its close proximity to the venue and the cheap price (I work in the travel industry and after my employee discount the price was rediculously low for an L.A accomodation). We had initially planned to walk to the venue, but the receptionists advised us against it an booked us a cab. The hotel might be old but well-maintained. Public facilities are clean and pleasant. Room was big, equipped with a TV set, refrigirator and coffee making facilites - none of which we used, but all looked clean. Bathroom was spotless, water in the shower pipping hot and with high pressure, bathroom amenities of better quality than what you find in most places. There's free parking for hotel guests, which is a great advantage. Will book there again if needed.");
+		AverageHotelDAOImpl DAO=new AverageHotelDAOImpl();
+		DAO.getAllData();
+		for (AverageHotel lh : DAO.getAllData()) {
+			new TripletAverage().triplet(lh);
+		}
+	
 	}
 
 	public  ArrayList<String> tokenizer(String content) throws Exception {

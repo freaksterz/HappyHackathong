@@ -52,7 +52,7 @@ public class StopWordRemoval {
 		
 		String sample_wostop="";
 // Token line
-		ArrayList<String> samp=new Triplet().tokenizer(content);
+		ArrayList<String> samp=new TripletLuxury().tokenizer(content);
 //		System.out.println(samp.length);
 		for (String string : samp) {
 			

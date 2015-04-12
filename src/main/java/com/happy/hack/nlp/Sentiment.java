@@ -53,7 +53,7 @@ public class Sentiment {
 		}
 	}
 
-	public void sentimet(String content) throws Exception {
+	public String sentimet(String content) throws Exception {
 		setup();
 		String[] lines=content.split("\\|\\|");
 		int sentWordCount=0;
@@ -72,7 +72,8 @@ public class Sentiment {
 		}
 //		cat in +ve or -ve 
 		float sentiment= sentimentSum == 0 || sentWordCount == 0? 0.0f : (sentimentSum/sentWordCount);
-		System.out.println("Sentiment="+sentiment);
+		return sentiment >0 ? "POSITIVE" : "Negative";
+
 	}
 	
 
