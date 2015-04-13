@@ -61,13 +61,12 @@ Design:
 •	Jackson JSON Processor: Is used to parse the json file and load it into SQL Table.
 •	Hibernate:  Is used to ingest the parsed data into the SQL table.
 
-2.	Service layer : 
+2.	Service layer :
 
-•	Core java POJO layer: POJO is used to map entity from hibernate.
+•	Functionality exposed as RestFull service with help of Jersey.
+    This send json which can be parsed irrespective of platform, can be used in WebApp or Mobile APP of any platform.
 
 3.	NPL Engine : 
-
-
 
 •	openNLP : Is used to tokenize and generate parse-tree of the reviews on document level
 
